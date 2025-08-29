@@ -103,18 +103,18 @@ class StudentController extends Controller
     public function register3Post(Request $request)
     {
             // Debug : voir toutes les données reçues
-        \Log::info('Request data:', $request->all());
+        // \Log::info('Request data:', $request->all());
         
-        // Debug : voir spécifiquement les papers
-        \Log::info('O-Level Papers:', $request->get('gce_olevel_papers', []));
-        \Log::info('O-Level Grades:', $request->get('gce_olevel_grades', []));
+        // // Debug : voir spécifiquement les papers
+        // \Log::info('O-Level Papers:', $request->get('gce_olevel_papers', []));
+        // \Log::info('O-Level Grades:', $request->get('gce_olevel_grades', []));
         
-        $validatedData = $request->validate([
-            // ... vos règles
-        ]);
+        // // $validatedData = $request->validate([
+        // //     // ... vos règles
+        // // ]);
         
-        // Debug : voir les données après validation
-        \Log::info('Validated data:', $validatedData);
+        // // Debug : voir les données après validation
+        // \Log::info('Validated data:', $validatedData);
 
         // dd($request->all());
 
@@ -167,7 +167,7 @@ class StudentController extends Controller
 
 
         if (!$studentId) {
-            return redirect('/register1')->with('error', 'Please complete the first form.');
+            return redirect('/register2')->with('error', 'Please complete the first the second form.');
         }
 
         // Update student record
@@ -175,7 +175,8 @@ class StudentController extends Controller
 
              
 
-        return redirect()->route('register4');
+        return redirect()->route('register4')->with('success', 'Step 3 completed successfully
+        ');
     }
 
     public function register4(Request $request)
@@ -193,7 +194,7 @@ class StudentController extends Controller
         $studentId = $request->session()->get('student_id');
 
         if (!$studentId) {
-            return redirect('/register1')->with('error', 'Please complete the first form.');
+            return redirect('/register3')->with('error', 'Please complete the first the third form.');
         }
 
         Student::where('id', $studentId)
@@ -248,14 +249,13 @@ class StudentController extends Controller
     public function register6Post(Request $request)
     {
         $validatedData = $request->validate([
-            'field' => 'nullable|string|max:2048', // 2MB max
-            'speciality' => 'nullable|string|max:2048' // 2MB max',
+            'other_background' => 'nullable|string|max:2048'
         ]);
 
         $studentId = $request->session()->get('student_id');
 
         if (!$studentId) {
-            return redirect('/register1')->with('error', 'Please complete the first form.');
+            return redirect('/register1')->with('error', 'Please complete the first th fifth form.');
         }
 
         Student::where('id', $studentId)
